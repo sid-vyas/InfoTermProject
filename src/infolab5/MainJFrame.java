@@ -6,6 +6,7 @@ package infolab5;
 
 import java.awt.CardLayout;
 import model.DoctorDirectory;
+import view.DoctorLoginPanel;
 import view.PatientLoginPanel;
 
 /**
@@ -117,6 +118,10 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void doctorLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorLoginButtonActionPerformed
         // TODO add your handling code here:
+        DoctorLoginPanel doctorLoginPanel = new DoctorLoginPanel(bottomPanel);
+        bottomPanel.add(doctorLoginPanel);
+        CardLayout layout = (CardLayout) bottomPanel.getLayout();
+        layout.next(bottomPanel);
     }//GEN-LAST:event_doctorLoginButtonActionPerformed
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
