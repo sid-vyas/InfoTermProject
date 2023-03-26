@@ -9,6 +9,12 @@ public class Patient {
     String name;
     String userId;
     String house;
+    int age;
+    String gender;
+    String dateOfBirth;
+    long phoneNumber;
+    String email;
+    String community;
 
     public String getHouse() {
         return house;
@@ -17,12 +23,6 @@ public class Patient {
     public void setHouse(String house) {
         this.house = house;
     }
-    int age;
-    String gender;
-    String dateOfBirth;
-    long phoneNumber;
-    String email;
-    String community;
 
     public String getCommunity() {
         return community;

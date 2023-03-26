@@ -4,6 +4,9 @@
  */
 package infolab5;
 
+import java.awt.CardLayout;
+import view.PatientLoginPanel;
+
 /**
  *
  * @author ASUS
@@ -42,6 +45,11 @@ public class MainJFrame extends javax.swing.JFrame {
         mainTitleLabel.setText("Hospital Management System");
 
         patientLoginButton.setText("Patient Login");
+        patientLoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                patientLoginButtonActionPerformed(evt);
+            }
+        });
 
         doctorLoginButton.setText("Doctor Login");
         doctorLoginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -62,24 +70,24 @@ public class MainJFrame extends javax.swing.JFrame {
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topPanelLayout.createSequentialGroup()
-                .addGap(389, 389, 389)
-                .addComponent(mainTitleLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(topPanelLayout.createSequentialGroup()
                 .addGap(97, 97, 97)
                 .addComponent(patientLoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(214, 214, 214)
+                .addGap(236, 236, 236)
                 .addComponent(doctorLoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
                 .addComponent(adminLoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(95, 95, 95))
+            .addGroup(topPanelLayout.createSequentialGroup()
+                .addGap(405, 405, 405)
+                .addComponent(mainTitleLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(mainTitleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(patientLoginButton)
                     .addComponent(doctorLoginButton)
@@ -100,7 +108,7 @@ public class MainJFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
+            .addComponent(mainSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
 
         pack();
@@ -113,6 +121,14 @@ public class MainJFrame extends javax.swing.JFrame {
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_adminLoginButtonActionPerformed
+
+    private void patientLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientLoginButtonActionPerformed
+        // TODO add your handling code here:
+        PatientLoginPanel patientLoginPanel = new PatientLoginPanel(bottomPanel);
+        bottomPanel.add(patientLoginPanel);
+        CardLayout layout = (CardLayout) bottomPanel.getLayout();
+        layout.next(bottomPanel);
+    }//GEN-LAST:event_patientLoginButtonActionPerformed
 
     /**
      * @param args the command line arguments
