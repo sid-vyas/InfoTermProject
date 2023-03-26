@@ -8,11 +8,29 @@ package model;
 public class Patient {
     String name;
     String userId;
+    String house;
+
+    public String getHouse() {
+        return house;
+    }
+
+    public void setHouse(String house) {
+        this.house = house;
+    }
     int age;
     String gender;
     String dateOfBirth;
     long phoneNumber;
     String email;
+    String community;
+
+    public String getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(String community) {
+        this.community = community;
+    }
 
     public String getName() {
         return name;
