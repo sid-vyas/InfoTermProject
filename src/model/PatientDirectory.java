@@ -26,7 +26,7 @@ public class PatientDirectory {
         this.allPatients.add(newPatient);
     }
     
-    public void removePatient(Patient employee) {
-        this.allPatients.remove(employee);
+    public void removePatient(Patient patient) {
+        this.allPatients.remove(patient);
     }
 }
