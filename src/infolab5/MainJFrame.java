@@ -28,46 +28,68 @@ public class MainJFrame extends javax.swing.JFrame {
 
         mainSplitPane = new javax.swing.JSplitPane();
         topPanel = new javax.swing.JPanel();
-        bottomPanel = new javax.swing.JPanel();
         mainTitleLabel = new javax.swing.JLabel();
+        patientLoginButton = new javax.swing.JButton();
+        doctorLoginButton = new javax.swing.JButton();
+        adminLoginButton = new javax.swing.JButton();
+        bottomPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         mainSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
+        mainTitleLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        mainTitleLabel.setText("Hospital Management System");
+
+        patientLoginButton.setText("Patient Login");
+
+        doctorLoginButton.setText("Doctor Login");
+        doctorLoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doctorLoginButtonActionPerformed(evt);
+            }
+        });
+
+        adminLoginButton.setText("Admin Login");
+        adminLoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminLoginButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1037, Short.MAX_VALUE)
+            .addGroup(topPanelLayout.createSequentialGroup()
+                .addGap(389, 389, 389)
+                .addComponent(mainTitleLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(topPanelLayout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(patientLoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(214, 214, 214)
+                .addComponent(doctorLoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                .addComponent(adminLoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(95, 95, 95))
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(topPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mainTitleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(patientLoginButton)
+                    .addComponent(doctorLoginButton)
+                    .addComponent(adminLoginButton))
+                .addGap(19, 19, 19))
         );
 
         mainSplitPane.setTopComponent(topPanel);
 
-        mainTitleLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        mainTitleLabel.setText("Hospital Management System");
-
-        javax.swing.GroupLayout bottomPanelLayout = new javax.swing.GroupLayout(bottomPanel);
-        bottomPanel.setLayout(bottomPanelLayout);
-        bottomPanelLayout.setHorizontalGroup(
-            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bottomPanelLayout.createSequentialGroup()
-                .addGap(294, 294, 294)
-                .addComponent(mainTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(474, Short.MAX_VALUE))
-        );
-        bottomPanelLayout.setVerticalGroup(
-            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bottomPanelLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(mainTitleLabel)
-                .addContainerGap(479, Short.MAX_VALUE))
-        );
-
+        bottomPanel.setLayout(new java.awt.CardLayout());
         mainSplitPane.setRightComponent(bottomPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -83,6 +105,14 @@ public class MainJFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void doctorLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorLoginButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_doctorLoginButtonActionPerformed
+
+    private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,9 +150,12 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton adminLoginButton;
     private javax.swing.JPanel bottomPanel;
+    private javax.swing.JButton doctorLoginButton;
     private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JLabel mainTitleLabel;
+    private javax.swing.JButton patientLoginButton;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }
