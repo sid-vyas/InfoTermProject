@@ -5,7 +5,10 @@
 package view;
 
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.JPanel;
+import model.DoctorDirectory;
 
 /**
  *
@@ -13,12 +16,15 @@ import javax.swing.JPanel;
  */
 public class PatientLoginPanel extends javax.swing.JPanel {
     JPanel bottomPanel;
+    DoctorDirectory allDoctors;
+
     /**
      * Creates new form patientLoginScreen
      */
-    public PatientLoginPanel(JPanel bottomPanel) {
+    public PatientLoginPanel(JPanel bottomPanel, DoctorDirectory allDoctors) {
         initComponents();
         this.bottomPanel = bottomPanel;
+        this.allDoctors = allDoctors;
     }
 
     /**
@@ -102,6 +108,15 @@ public class PatientLoginPanel extends javax.swing.JPanel {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
+        System.out.println(usernameField.getText());
+        if(usernameField.getText().equals("patient") || usernameField.getText().equals("patient1") || usernameField.getText().equals("patient2")) {
+            DoctorSearchPanel doctorSearchPanel = new DoctorSearchPanel(bottomPanel, allDoctors);
+            bottomPanel.add(doctorSearchPanel);
+            CardLayout layout = (CardLayout) bottomPanel.getLayout();
+            layout.next(bottomPanel);
+        } else {
+            JOptionPane.showMessageDialog(bottomPanel, "The entered username is incorrect", "Invalid Credentials", ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
