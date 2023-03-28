@@ -5,9 +5,9 @@
 package view;
 
 import javax.swing.JPanel;
-import model.DoctorDirectory;
-import model.HospitalDirectory;
-import model.PatientDirectory;
+import model.directories.DoctorDirectory;
+import model.directories.HospitalDirectory;
+import model.directories.PatientDirectory;
 
 /**
  *

@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import model.Doctor;
-import model.DoctorDirectory;
+import model.dataModels.Doctor;
+import model.directories.DoctorDirectory;
 
 /**
  *
@@ -116,7 +116,7 @@ public class DoctorSearchPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) doctorListTable.getModel();
         TableRowSorter<DefaultTableModel> ts = new TableRowSorter<DefaultTableModel>(model);
         doctorListTable.setRowSorter(ts);
-        ts.setRowFilter(RowFilter.regexFilter(searchField.getText().trim()));
+        ts.setRowFilter(RowFilter.regexFilter(searchField.getText().toLowerCase().trim()));
     }//GEN-LAST:event_searchFieldKeyReleased
 
     private void populateTable() {

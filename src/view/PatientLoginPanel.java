@@ -8,7 +8,7 @@ import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.JPanel;
-import model.DoctorDirectory;
+import model.directories.DoctorDirectory;
 
 /**
  *
