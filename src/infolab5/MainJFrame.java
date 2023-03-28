@@ -6,6 +6,9 @@ package infolab5;
 
 import java.awt.CardLayout;
 import model.DoctorDirectory;
+import model.HospitalDirectory;
+import model.PatientDirectory;
+import view.AdminLoginPanel;
 import view.DoctorLoginPanel;
 import view.PatientLoginPanel;
 
@@ -16,10 +19,14 @@ import view.PatientLoginPanel;
 public class MainJFrame extends javax.swing.JFrame {
 
     DoctorDirectory allDoctors;
+    HospitalDirectory allHospitals;
+    PatientDirectory allPatients;
     
     public MainJFrame() {
         initComponents();
         allDoctors = new DoctorDirectory();
+        allHospitals = new HospitalDirectory();
+        allPatients = new PatientDirectory();
     }
 
     /**
@@ -126,6 +133,10 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
         // TODO add your handling code here:
+        AdminLoginPanel adminLoginPanel = new AdminLoginPanel(bottomPanel, allDoctors, allHospitals, allPatients);
+        bottomPanel.add(adminLoginPanel);
+        CardLayout layout = (CardLayout) bottomPanel.getLayout();
+        layout.next(bottomPanel);
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     private void patientLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientLoginButtonActionPerformed

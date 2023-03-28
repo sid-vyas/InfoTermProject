@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class HospitalDirectory {
     ArrayList<Hospital> allHospitals;
     
-    HospitalDirectory() {
+    public HospitalDirectory() {
         this.allHospitals = new ArrayList<Hospital>();
         
         Hospital hospital1 = new Hospital();
