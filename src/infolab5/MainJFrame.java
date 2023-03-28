@@ -118,7 +118,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void doctorLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorLoginButtonActionPerformed
         // TODO add your handling code here:
-        DoctorLoginPanel doctorLoginPanel = new DoctorLoginPanel(bottomPanel);
+        DoctorLoginPanel doctorLoginPanel = new DoctorLoginPanel(bottomPanel, allDoctors);
         bottomPanel.add(doctorLoginPanel);
         CardLayout layout = (CardLayout) bottomPanel.getLayout();
         layout.next(bottomPanel);
@@ -173,7 +173,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adminLoginButton;
-    private javax.swing.JPanel bottomPanel;
+    public javax.swing.JPanel bottomPanel;
     private javax.swing.JButton doctorLoginButton;
     private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JLabel mainTitleLabel;
