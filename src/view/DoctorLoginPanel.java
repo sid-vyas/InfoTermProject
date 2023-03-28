@@ -4,7 +4,9 @@
  */
 package view;
 
+import java.awt.CardLayout;
 import javax.swing.JPanel;
+import model.DoctorDirectory;
 
 /**
  *
@@ -12,12 +14,14 @@ import javax.swing.JPanel;
  */
 public class DoctorLoginPanel extends javax.swing.JPanel {
     JPanel bottomPanel;
+    DoctorDirectory allDoctors;
     /**
      * Creates new form DoctorLoginPanel
      */
-    public DoctorLoginPanel(JPanel bottomPanel) {
+    public DoctorLoginPanel(JPanel bottomPanel, DoctorDirectory allDoctors) {
         initComponents();
         this.bottomPanel = bottomPanel;
+        this.allDoctors = allDoctors;
     }
 
     /**
@@ -34,7 +38,7 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
         usernameLabel = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
-        loginButton1 = new javax.swing.JButton();
+        signUpButton = new javax.swing.JButton();
 
         backButton.setText("< Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -61,10 +65,10 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
             }
         });
 
-        loginButton1.setText("Sign Up");
-        loginButton1.addActionListener(new java.awt.event.ActionListener() {
+        signUpButton.setText("Sign Up");
+        signUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginButton1ActionPerformed(evt);
+                signUpButtonActionPerformed(evt);
             }
         });
 
@@ -85,7 +89,7 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(loginButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(loginButton1))
+                                .addComponent(signUpButton))
                             .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(730, Short.MAX_VALUE))
         );
@@ -103,7 +107,7 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginButton)
-                    .addComponent(loginButton1))
+                    .addComponent(signUpButton))
                 .addContainerGap(601, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -121,15 +125,19 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_loginButtonActionPerformed
 
-    private void loginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButton1ActionPerformed
+    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_loginButton1ActionPerformed
+        DoctorSignUpPanel doctorSignUpPanel = new DoctorSignUpPanel(bottomPanel, allDoctors);
+        bottomPanel.add(doctorSignUpPanel);
+        CardLayout layout = (CardLayout) bottomPanel.getLayout();
+        layout.next(bottomPanel);
+    }//GEN-LAST:event_signUpButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JButton loginButton;
-    private javax.swing.JButton loginButton1;
+    private javax.swing.JButton signUpButton;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JTextField usernameField;
     private javax.swing.JLabel usernameLabel;
