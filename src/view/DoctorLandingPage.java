@@ -107,6 +107,10 @@ public class DoctorLandingPage extends javax.swing.JPanel {
 
     private void createEncounterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createEncounterButtonActionPerformed
         // TODO add your handling code here:
+        CreateEncounterPanel createEncounterPanel = new CreateEncounterPanel(rightPanel, allEncounters ,allPatients);
+        rightPanel.add(createEncounterPanel);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.next(rightPanel);
     }//GEN-LAST:event_createEncounterButtonActionPerformed
 
 
