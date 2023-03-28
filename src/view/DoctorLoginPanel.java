@@ -5,8 +5,12 @@
 package view;
 
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import model.DoctorDirectory;
+import model.dataModels.Doctor;
+import model.directories.DoctorDirectory;
+import model.directories.EncounterDirectory;
+import model.directories.PatientDirectory;
 
 /**
  *
@@ -15,13 +19,17 @@ import model.DoctorDirectory;
 public class DoctorLoginPanel extends javax.swing.JPanel {
     JPanel bottomPanel;
     DoctorDirectory allDoctors;
+    EncounterDirectory allEncounters;
+    PatientDirectory allPatients;
     /**
      * Creates new form DoctorLoginPanel
      */
-    public DoctorLoginPanel(JPanel bottomPanel, DoctorDirectory allDoctors) {
+    public DoctorLoginPanel(JPanel bottomPanel, DoctorDirectory allDoctors, EncounterDirectory allEncounters, PatientDirectory allPatients) {
         initComponents();
         this.bottomPanel = bottomPanel;
         this.allDoctors = allDoctors;
+        this.allEncounters = allEncounters;
+        this.allPatients = allPatients;
     }
 
     /**
@@ -123,16 +131,33 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
+        if(isUsernameValid()) {
+            CreateEncounterPanel createEncounterPanel = new CreateEncounterPanel(bottomPanel, allDoctors, allEncounters, allPatients);
+            bottomPanel.add(createEncounterPanel);
+            CardLayout layout = (CardLayout) bottomPanel.getLayout();
+            layout.next(bottomPanel);
+        } else {
+            JOptionPane.showMessageDialog(this, "Please check the username again.", "Invalid Credentials", HEIGHT);
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         // TODO add your handling code here:
-        DoctorSignUpPanel doctorSignUpPanel = new DoctorSignUpPanel(bottomPanel, allDoctors);
+        DoctorSignUpPanel doctorSignUpPanel = new DoctorSignUpPanel(bottomPanel, allDoctors, allPatients, allEncounters);
         bottomPanel.add(doctorSignUpPanel);
         CardLayout layout = (CardLayout) bottomPanel.getLayout();
         layout.next(bottomPanel);
     }//GEN-LAST:event_signUpButtonActionPerformed
 
+    Boolean isUsernameValid() {
+        for(Doctor doc : allDoctors.getAllDoctors()) {
+            if(doc.getUserId().equals(usernameField.getText())) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;

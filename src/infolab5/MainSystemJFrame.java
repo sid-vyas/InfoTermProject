@@ -5,9 +5,10 @@
 package infolab5;
 
 import java.awt.CardLayout;
-import model.DoctorDirectory;
-import model.HospitalDirectory;
-import model.PatientDirectory;
+import model.directories.DoctorDirectory;
+import model.directories.EncounterDirectory;
+import model.directories.HospitalDirectory;
+import model.directories.PatientDirectory;
 import view.AdminLoginPanel;
 import view.DoctorLoginPanel;
 import view.PatientLoginPanel;
@@ -16,17 +17,19 @@ import view.PatientLoginPanel;
  *
  * @author ASUS
  */
-public class MainJFrame extends javax.swing.JFrame {
+public class MainSystemJFrame extends javax.swing.JFrame {
 
     DoctorDirectory allDoctors;
     HospitalDirectory allHospitals;
     PatientDirectory allPatients;
+    EncounterDirectory allEncounters;
     
-    public MainJFrame() {
+    public MainSystemJFrame() {
         initComponents();
         allDoctors = new DoctorDirectory();
         allHospitals = new HospitalDirectory();
         allPatients = new PatientDirectory();
+        allEncounters = new EncounterDirectory();
     }
 
     /**
@@ -125,7 +128,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void doctorLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorLoginButtonActionPerformed
         // TODO add your handling code here:
-        DoctorLoginPanel doctorLoginPanel = new DoctorLoginPanel(bottomPanel, allDoctors);
+        DoctorLoginPanel doctorLoginPanel = new DoctorLoginPanel(bottomPanel, allDoctors, allEncounters, allPatients);
         bottomPanel.add(doctorLoginPanel);
         CardLayout layout = (CardLayout) bottomPanel.getLayout();
         layout.next(bottomPanel);
@@ -164,20 +167,21 @@ public class MainJFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainSystemJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainSystemJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainSystemJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainSystemJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainJFrame().setVisible(true);
+                new MainSystemJFrame().setVisible(true);
             }
         });
     }

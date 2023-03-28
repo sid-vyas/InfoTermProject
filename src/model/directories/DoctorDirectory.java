@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package model;
+package model.directories;
 
 import java.util.ArrayList;
+import model.dataModels.Doctor;
 
 public class DoctorDirectory {
     ArrayList<Doctor> allDoctors;

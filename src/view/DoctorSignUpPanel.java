@@ -10,8 +10,10 @@ import static java.awt.image.ImageObserver.HEIGHT;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import model.Doctor;
-import model.DoctorDirectory;
+import model.dataModels.Doctor;
+import model.directories.DoctorDirectory;
+import model.directories.EncounterDirectory;
+import model.directories.PatientDirectory;
 
 /**
  *
@@ -24,13 +26,17 @@ public class DoctorSignUpPanel extends javax.swing.JPanel {
      */
     JPanel bottomPanel;
     Doctor newDoctor;
-    DoctorDirectory allDoctors = new DoctorDirectory();
+    DoctorDirectory allDoctors;
+    PatientDirectory allPatients;
+    EncounterDirectory allEncounters;
     
-    public DoctorSignUpPanel(JPanel bottomPanel, DoctorDirectory allDoctors) {
+    public DoctorSignUpPanel(JPanel bottomPanel, DoctorDirectory allDoctors, PatientDirectory allPatients, EncounterDirectory allEncounters) {
         initComponents();
         this.bottomPanel = bottomPanel;
         newDoctor = new Doctor();
         this.allDoctors = allDoctors;
+        this.allPatients = allPatients;
+        this.allEncounters = allEncounters;
     }
 
     /**
@@ -219,13 +225,12 @@ public class DoctorSignUpPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(mainTitleLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(usernameLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usernameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -329,7 +334,7 @@ public class DoctorSignUpPanel extends javax.swing.JPanel {
             
             JOptionPane.showMessageDialog(this, "User Saved Successfully", "Success", HEIGHT);
             
-            DoctorLoginPanel doctorLoginPanel = new DoctorLoginPanel(bottomPanel, allDoctors);
+            DoctorLoginPanel doctorLoginPanel = new DoctorLoginPanel(bottomPanel, allDoctors, allEncounters, allPatients);
             bottomPanel.add(doctorLoginPanel);
             CardLayout layout = (CardLayout) bottomPanel.getLayout();
             layout.next(bottomPanel);
