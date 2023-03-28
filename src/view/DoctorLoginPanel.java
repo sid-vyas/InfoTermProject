@@ -132,7 +132,7 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
         if(isUsernameValid()) {
-            CreateEncounterPanel createEncounterPanel = new CreateEncounterPanel(bottomPanel, allDoctors, allEncounters, allPatients);
+            DoctorLandingPage createEncounterPanel = new DoctorLandingPage(bottomPanel, allDoctors, allEncounters, allPatients);
             bottomPanel.add(createEncounterPanel);
             CardLayout layout = (CardLayout) bottomPanel.getLayout();
             layout.next(bottomPanel);
