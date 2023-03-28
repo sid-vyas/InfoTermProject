@@ -4,10 +4,14 @@
  */
 package view;
 
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.JPanel;
 import model.directories.DoctorDirectory;
 import model.directories.HospitalDirectory;
 import model.directories.PatientDirectory;
+import view.SystemAdminLoginPanel;
 
 /**
  *
@@ -149,6 +153,18 @@ public class AdminLoginPanel extends javax.swing.JPanel {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
+                                               
+        // TODO add your handling code here:
+        System.out.println(usernameField.getText());
+        if(usernameField.getText().equals("admin") || usernameField.getText().equals("admin1") || usernameField.getText().equals("admin2")) {
+            SystemAdminLoginPanel systemadminloginPanel = new SystemAdminLoginPanel(bottomPanel, allDoctors);
+            bottomPanel.add(systemadminloginPanel);
+            CardLayout layout = (CardLayout) bottomPanel.getLayout();
+            layout.next(bottomPanel);
+        } else {
+            JOptionPane.showMessageDialog(bottomPanel, "The entered username is incorrect", "Invalid Credentials", ERROR_MESSAGE);
+        }
+                                              
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
