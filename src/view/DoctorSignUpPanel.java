@@ -309,7 +309,7 @@ public class DoctorSignUpPanel extends javax.swing.JPanel {
             newDoctor.setHospitalName(hospitalNameField.getText());
             newDoctor.setCommunity(communityMenu.getSelectedItem().toString());
             
-            if(Integer.parseInt(ageField.getText()) < 18 || Integer.parseInt(ageField.getText()) > 65) {
+            if(Integer.parseInt(ageField.getText()) < 22 || Integer.parseInt(ageField.getText()) > 65) {
                 ageField.setBorder(BorderFactory.createLineBorder(Color.red));
                 JOptionPane.showMessageDialog(this, "Please enter an age between 22 and 65", "Error", HEIGHT);
                 return;
@@ -332,7 +332,7 @@ public class DoctorSignUpPanel extends javax.swing.JPanel {
             
             allDoctors.addDoctor(newDoctor);
             
-            JOptionPane.showMessageDialog(this, "User Saved Successfully", "Success", HEIGHT);
+            JOptionPane.showMessageDialog(this, "Doctor is Saved Successfully", "Success", HEIGHT);
             
             DoctorLoginPanel doctorLoginPanel = new DoctorLoginPanel(bottomPanel, allDoctors, allEncounters, allPatients);
             bottomPanel.add(doctorLoginPanel);

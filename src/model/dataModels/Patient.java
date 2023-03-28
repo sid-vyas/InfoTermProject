@@ -5,13 +5,15 @@
 
 package model.dataModels;
 
+import java.util.Date;
+
 public class Patient {
     String name;
-    String userId;
+    String username;
     String house;
     int age;
     String gender;
-    String dateOfBirth;
+    Date dateOfBirth;
     long phoneNumber;
     String email;
     String community;
@@ -40,12 +42,12 @@ public class Patient {
         this.name = name;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getAge() {
@@ -64,11 +66,11 @@ public class Patient {
         this.gender = gender;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
