@@ -4,7 +4,9 @@
  */
 package view;
 
+import infolab5.MainSystemJFrame;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import model.dataModels.Doctor;
@@ -42,7 +44,6 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
         communityButton = new javax.swing.JButton();
         hospitalButton = new javax.swing.JButton();
         doctorButton = new javax.swing.JButton();
-        patientButton = new javax.swing.JButton();
         rightPanel = new javax.swing.JPanel();
         systemAdminLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
@@ -63,9 +64,6 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
             }
         });
 
-        patientButton.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        patientButton.setText("Patient");
-
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
@@ -75,9 +73,8 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(communityButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(hospitalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(doctorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(patientButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(doctorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,9 +85,7 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
                 .addComponent(hospitalButton)
                 .addGap(107, 107, 107)
                 .addComponent(doctorButton)
-                .addGap(91, 91, 91)
-                .addComponent(patientButton)
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addContainerGap(432, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(leftPanel);
@@ -102,6 +97,11 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
 
         logoutButton.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         logoutButton.setText("LogOut");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
@@ -139,12 +139,22 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void doctorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorButtonActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here
+       
         DoctorSearchPanel doctorSearchPanel = new DoctorSearchPanel(rightPanel, allDoctors);
             rightPanel.add(doctorSearchPanel);
             CardLayout layout = (CardLayout) rightPanel.getLayout();
             layout.next(rightPanel);
     }//GEN-LAST:event_doctorButtonActionPerformed
+
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        // TODO add your handling code here:
+        int a=JOptionPane.showConfirmDialog(null,"Do you want to close the application","Select",JOptionPane.YES_NO_OPTION);
+        if(a==0)
+        {
+            System.exit(a);
+        }
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -154,7 +164,6 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JButton logoutButton;
-    private javax.swing.JButton patientButton;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JLabel systemAdminLabel;
     // End of variables declaration//GEN-END:variables

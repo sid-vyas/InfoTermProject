@@ -49,9 +49,8 @@
                           <Component id="communityButton" max="32767" attributes="0"/>
                           <Component id="hospitalButton" max="32767" attributes="0"/>
                           <Component id="doctorButton" max="32767" attributes="0"/>
-                          <Component id="patientButton" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="11" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -64,9 +63,7 @@
                       <Component id="hospitalButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
                       <Component id="doctorButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
-                      <Component id="patientButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="318" max="32767" attributes="0"/>
+                      <EmptySpace pref="432" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -98,14 +95,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="doctorButtonActionPerformed"/>
               </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="patientButton">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Helvetica Neue" size="13" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Patient"/>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -161,6 +150,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="LogOut"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logoutButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
