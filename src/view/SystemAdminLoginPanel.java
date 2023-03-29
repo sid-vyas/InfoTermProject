@@ -39,24 +39,20 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSplitPane1 = new javax.swing.JSplitPane();
+        splitPane = new javax.swing.JSplitPane();
         leftPanel = new javax.swing.JPanel();
         communityButton = new javax.swing.JButton();
         hospitalButton = new javax.swing.JButton();
         doctorButton = new javax.swing.JButton();
         rightPanel = new javax.swing.JPanel();
-        systemAdminLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
 
-        jSplitPane1.setDividerLocation(120);
+        splitPane.setDividerLocation(120);
 
-        communityButton.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         communityButton.setText("Community");
 
-        hospitalButton.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         hospitalButton.setText("Hospital");
 
-        doctorButton.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         doctorButton.setText("Doctor");
         doctorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,34 +65,28 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(communityButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(hospitalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(doctorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                    .addComponent(doctorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftPanelLayout.createSequentialGroup()
-                .addGap(87, 87, 87)
+                .addGap(143, 143, 143)
                 .addComponent(communityButton)
                 .addGap(105, 105, 105)
                 .addComponent(hospitalButton)
                 .addGap(107, 107, 107)
                 .addComponent(doctorButton)
-                .addContainerGap(432, Short.MAX_VALUE))
+                .addContainerGap(382, Short.MAX_VALUE))
         );
 
-        jSplitPane1.setLeftComponent(leftPanel);
+        splitPane.setLeftComponent(leftPanel);
 
-        systemAdminLabel.setFont(new java.awt.Font("Khmer MN", 1, 24)); // NOI18N
-        systemAdminLabel.setForeground(new java.awt.Color(255, 51, 51));
-        systemAdminLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        systemAdminLabel.setText("SYSTEM ADMIN");
-
-        logoutButton.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        logoutButton.setText("LogOut");
+        logoutButton.setText("Log Out");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
@@ -107,34 +97,30 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rightPanelLayout.createSequentialGroup()
-                .addGap(327, 327, 327)
-                .addComponent(systemAdminLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 383, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rightPanelLayout.createSequentialGroup()
+                .addContainerGap(864, Short.MAX_VALUE)
                 .addComponent(logoutButton)
-                .addContainerGap())
+                .addGap(27, 27, 27))
         );
         rightPanelLayout.setVerticalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(logoutButton)
-                    .addComponent(systemAdminLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(749, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addComponent(logoutButton)
+                .addContainerGap(760, Short.MAX_VALUE))
         );
 
-        jSplitPane1.setRightComponent(rightPanel);
+        splitPane.setRightComponent(rightPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
+            .addComponent(splitPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
+            .addComponent(splitPane)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -161,11 +147,10 @@ public class SystemAdminLoginPanel extends javax.swing.JPanel {
     private javax.swing.JButton communityButton;
     private javax.swing.JButton doctorButton;
     private javax.swing.JButton hospitalButton;
-    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JButton logoutButton;
     private javax.swing.JPanel rightPanel;
-    private javax.swing.JLabel systemAdminLabel;
+    private javax.swing.JSplitPane splitPane;
     // End of variables declaration//GEN-END:variables
 
 }
