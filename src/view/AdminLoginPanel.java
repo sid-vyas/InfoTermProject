@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import model.directories.DoctorDirectory;
 import model.directories.HospitalDirectory;
 import model.directories.PatientDirectory;
-import view.SystemAdminLoginPanel;
 
 /**
  *
@@ -23,6 +22,7 @@ public class AdminLoginPanel extends javax.swing.JPanel {
      * Creates new form AdminLoginPanel
      */
     JPanel bottomPanel;
+    String adminType;
     DoctorDirectory allDoctors;
     HospitalDirectory allHospitals;
     PatientDirectory allPatients;
@@ -49,7 +49,6 @@ public class AdminLoginPanel extends javax.swing.JPanel {
         adminTypeLabel = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
-        signUpButton = new javax.swing.JButton();
         usernameLabel = new javax.swing.JLabel();
         adminTypeMenu = new javax.swing.JComboBox<>();
 
@@ -78,13 +77,6 @@ public class AdminLoginPanel extends javax.swing.JPanel {
             }
         });
 
-        signUpButton.setText("Sign Up");
-        signUpButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signUpButtonActionPerformed(evt);
-            }
-        });
-
         usernameLabel.setText("Enter Username:");
 
         adminTypeMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "System", "Community", "Hospital" }));
@@ -108,13 +100,12 @@ public class AdminLoginPanel extends javax.swing.JPanel {
                             .addComponent(adminTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(usernameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(loginButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(signUpButton))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(adminTypeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(adminTypeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addComponent(loginButton)))))
                 .addContainerGap(732, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -134,11 +125,9 @@ public class AdminLoginPanel extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(usernameLabel)
                         .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loginButton)
-                    .addComponent(signUpButton))
-                .addContainerGap(577, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(loginButton)
+                .addContainerGap(579, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -155,23 +144,27 @@ public class AdminLoginPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         {                                  
         // TODO add your handling code here:
-        if((adminTypeMenu.getSelectedItem().equals("System") && (usernameField.getText().equals("admin1") || usernameField.getText().equals("admin2")))  || (adminTypeMenu.getSelectedItem().equals("Community") && (usernameField.getText().equals("comm1") || usernameField.getText().equals("comm2")))) {
-            SystemAdminLoginPanel systemAdminLoginPanel = new SystemAdminLoginPanel(bottomPanel, allDoctors);
+        if(adminTypeMenu.getSelectedItem().equals("System")) {
+            adminType = "System";
+        } else if(adminTypeMenu.getSelectedItem().equals("Community")) {
+            adminType = "Community";
+        } else {
+            adminType = "Hospital";
+        }
+        
+        if((adminTypeMenu.getSelectedItem().equals("System") && (usernameField.getText().equals("admin1") || usernameField.getText().equals("admin2")))  || (adminTypeMenu.getSelectedItem().equals("Community") && (usernameField.getText().equals("comm1") || usernameField.getText().equals("comm2"))) || (adminTypeMenu.getSelectedItem().equals("Hospital") && (usernameField.getText().equals("hAdmin1") || usernameField.getText().equals("hAdmin2")))) {
+            AdminLandingPanel systemAdminLoginPanel = new AdminLandingPanel(adminType, allDoctors, allHospitals, allPatients);
             bottomPanel.add(systemAdminLoginPanel);
             CardLayout layout = (CardLayout) bottomPanel.getLayout();
             layout.next(bottomPanel);
             JOptionPane.showMessageDialog(bottomPanel, "You are logged in Successfully");
         } 
-      else {
+        else {
             JOptionPane.showMessageDialog(bottomPanel, "The entered username is incorrect", "Invalid Credentials", ERROR_MESSAGE);
         }  
                                               
     }//GEN-LAST:event_loginButtonActionPerformed
     }
-    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_signUpButtonActionPerformed
-
     private void adminTypeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminTypeMenuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_adminTypeMenuActionPerformed
@@ -182,7 +175,6 @@ public class AdminLoginPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> adminTypeMenu;
     private javax.swing.JButton backButton;
     private javax.swing.JButton loginButton;
-    private javax.swing.JButton signUpButton;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JTextField usernameField;
     private javax.swing.JLabel usernameLabel;
