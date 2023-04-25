@@ -64,6 +64,8 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
         communityMenu = new javax.swing.JComboBox<>();
         ageLabel = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 153, 153));
+
         doctorListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

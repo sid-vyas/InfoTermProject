@@ -64,6 +64,8 @@ public class CreatePatientPanel extends javax.swing.JPanel {
         communityMenu = new javax.swing.JComboBox<>();
         createPatientButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 153, 153));
+
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         titleLabel.setText("Create Patient");
 

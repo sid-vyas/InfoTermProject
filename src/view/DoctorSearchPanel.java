@@ -43,6 +43,8 @@ public class DoctorSearchPanel extends javax.swing.JPanel {
         jScrollPane = new javax.swing.JScrollPane();
         doctorListTable = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(255, 153, 153));
+
         titleitleLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         titleitleLabel.setText("Search Doctors");
 

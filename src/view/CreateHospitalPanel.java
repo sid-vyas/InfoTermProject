@@ -44,6 +44,8 @@ public class CreateHospitalPanel extends javax.swing.JPanel {
         updateTitleLabel = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(255, 153, 153));
+
         communityMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Uptown", "Downtown", "York" }));
         communityMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

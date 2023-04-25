@@ -48,6 +48,8 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
         loginButton = new javax.swing.JButton();
         signUpButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 153, 153));
+
         backButton.setText("< Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

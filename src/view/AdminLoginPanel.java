@@ -55,6 +55,8 @@ public class AdminLoginPanel extends javax.swing.JPanel {
         usernameLabel = new javax.swing.JLabel();
         adminTypeMenu = new javax.swing.JComboBox<>();
 
+        setBackground(new java.awt.Color(255, 153, 153));
+
         backButton.setText("< Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

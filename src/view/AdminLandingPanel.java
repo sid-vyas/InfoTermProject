@@ -56,6 +56,8 @@ public class AdminLandingPanel extends javax.swing.JPanel {
 
         splitPane.setDividerLocation(120);
 
+        leftPanel.setBackground(new java.awt.Color(255, 153, 153));
+
         viewHospitalsButton.setText("View Hospitals");
         viewHospitalsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,7 +97,7 @@ public class AdminLandingPanel extends javax.swing.JPanel {
                     .addComponent(createDoctorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(createHospitalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(viewDoctorsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,6 +115,7 @@ public class AdminLandingPanel extends javax.swing.JPanel {
 
         splitPane.setLeftComponent(leftPanel);
 
+        rightPanel.setBackground(new java.awt.Color(255, 153, 153));
         rightPanel.setLayout(new java.awt.CardLayout());
         splitPane.setRightComponent(rightPanel);
 

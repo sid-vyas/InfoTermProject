@@ -58,6 +58,8 @@ public class HospitalViewPanel extends javax.swing.JPanel {
         communityMenu4 = new javax.swing.JComboBox<>();
         saveButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 153, 153));
+
         hospitalListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -264,10 +266,6 @@ public class HospitalViewPanel extends javax.swing.JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel communityLabel;
-    private javax.swing.JComboBox<String> communityMenu;
-    private javax.swing.JComboBox<String> communityMenu1;
-    private javax.swing.JComboBox<String> communityMenu2;
-    private javax.swing.JComboBox<String> communityMenu3;
     private javax.swing.JComboBox<String> communityMenu4;
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextField employeesField;

@@ -68,6 +68,8 @@ public class DoctorSignUpPanel extends javax.swing.JPanel {
         otherGenderButton = new javax.swing.JRadioButton();
         signUpButton = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 153, 153));
+
         mainTitleLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         mainTitleLabel1.setText("Create Doctor Profile");
 

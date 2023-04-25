@@ -46,6 +46,8 @@ public class DoctorLandingPage extends javax.swing.JPanel {
         createEncounterButton = new javax.swing.JButton();
         rightPanel = new javax.swing.JPanel();
 
+        leftPanel.setBackground(new java.awt.Color(255, 153, 153));
+
         createPatientButton.setText("Create Patient");
         createPatientButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +84,7 @@ public class DoctorLandingPage extends javax.swing.JPanel {
 
         splitPanel.setLeftComponent(leftPanel);
 
+        rightPanel.setBackground(new java.awt.Color(255, 153, 153));
         rightPanel.setLayout(new java.awt.CardLayout());
         splitPanel.setRightComponent(rightPanel);
 
