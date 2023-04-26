@@ -32,6 +32,7 @@ public class DoctorLandingPage extends javax.swing.JPanel {
         leftPanel = new javax.swing.JPanel();
         createPatientButton = new javax.swing.JButton();
         createEncounterButton = new javax.swing.JButton();
+        viewEncounterButton = new javax.swing.JButton();
         rightPanel = new javax.swing.JPanel();
 
         leftPanel.setBackground(new java.awt.Color(255, 153, 153));
@@ -50,6 +51,13 @@ public class DoctorLandingPage extends javax.swing.JPanel {
             }
         });
 
+        viewEncounterButton.setText("View Encounters");
+        viewEncounterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewEncounterButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
@@ -58,16 +66,19 @@ public class DoctorLandingPage extends javax.swing.JPanel {
                 .addGap(12, 12, 12)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(createEncounterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(createPatientButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(createPatientButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(viewEncounterButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftPanelLayout.createSequentialGroup()
                 .addGap(167, 167, 167)
                 .addComponent(createPatientButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 412, Short.MAX_VALUE)
+                .addGap(170, 170, 170)
                 .addComponent(createEncounterButton)
-                .addGap(187, 187, 187))
+                .addGap(174, 174, 174)
+                .addComponent(viewEncounterButton)
+                .addContainerGap(232, Short.MAX_VALUE))
         );
 
         splitPanel.setLeftComponent(leftPanel);
@@ -104,6 +115,14 @@ public class DoctorLandingPage extends javax.swing.JPanel {
         layout.next(rightPanel);
     }//GEN-LAST:event_createEncounterButtonActionPerformed
 
+    private void viewEncounterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewEncounterButtonActionPerformed
+        // TODO add your handling code here:
+        ViewEncounterScreen viewEncounterScreen = new ViewEncounterScreen();
+        rightPanel.add(viewEncounterScreen);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.next(rightPanel);
+    }//GEN-LAST:event_viewEncounterButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createEncounterButton;
@@ -111,5 +130,6 @@ public class DoctorLandingPage extends javax.swing.JPanel {
     private javax.swing.JPanel leftPanel;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JSplitPane splitPanel;
+    private javax.swing.JButton viewEncounterButton;
     // End of variables declaration//GEN-END:variables
 }
