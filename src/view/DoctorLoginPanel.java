@@ -5,9 +5,17 @@
 package view;
 
 import java.awt.CardLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import model.dataModels.Doctor;
 import model.directories.DoctorDirectory;
 import model.directories.EncounterDirectory;
 import model.directories.PatientDirectory;
@@ -21,6 +29,13 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
     DoctorDirectory allDoctors;
     EncounterDirectory allEncounters;
     PatientDirectory allPatients;
+    
+    private static final String username = "root";
+    private static final String password = "root";
+    private static final String dataConnector = "jdbc:mysql://localhost:3306/connector";
+    Connection sqlConn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     /**
      * Creates new form DoctorLoginPanel
      */
@@ -132,34 +147,51 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_usernameFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-        if(isUsernameValid()) {
-            DoctorLandingPage createEncounterPanel = new DoctorLandingPage(bottomPanel, allDoctors, allEncounters, allPatients);
-            bottomPanel.add(createEncounterPanel);
-            CardLayout layout = (CardLayout) bottomPanel.getLayout();
-            layout.next(bottomPanel);
-        } else {
-            JOptionPane.showMessageDialog(this, "Please check the username again.", "Invalid Credentials", HEIGHT);
+        try {
+            // TODO add your handling code here:
+            if(isUsernameValid()) {
+                DoctorLandingPage createEncounterPanel = new DoctorLandingPage(bottomPanel, allDoctors, allEncounters, allPatients);
+                bottomPanel.add(createEncounterPanel);
+                CardLayout layout = (CardLayout) bottomPanel.getLayout();
+                layout.next(bottomPanel);
+            } else {
+                JOptionPane.showMessageDialog(this, "Please check the username again.", "Invalid Credentials", HEIGHT);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DoctorLoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DoctorLoginPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         // TODO add your handling code here:
-        DoctorSignUpPanel doctorSignUpPanel = new DoctorSignUpPanel(bottomPanel, allDoctors, allPatients, allEncounters);
+        DoctorSignUpPanel doctorSignUpPanel = new DoctorSignUpPanel();
         bottomPanel.add(doctorSignUpPanel);
         CardLayout layout = (CardLayout) bottomPanel.getLayout();
         layout.next(bottomPanel);
     }//GEN-LAST:event_signUpButtonActionPerformed
 
-    Boolean isUsernameValid() {
+    Boolean isUsernameValid() throws ClassNotFoundException, SQLException {
         if(usernameField.getText().equals("doctor") || usernameField.getText().equals("doctor1")) {
             return true;
         }
         
-        for(Doctor doc : allDoctors.getAllDoctors()) {
-            if(doc.getUserId().equals(usernameField.getText())) {
-                return true;
-            }
+        Class.forName("com.mysql.jdbc.Driver");
+        sqlConn = DriverManager.getConnection(dataConnector, username, password);
+        pst = sqlConn.prepareStatement("select * from doctors");
+
+        rs = pst.executeQuery();
+        ArrayList<String> columnData = new ArrayList<String>();
+
+        while(rs.next()) {
+            columnData.add(rs.getString("Username"));
+        }
+        
+        for(String doc : columnData) {
+            if(doc.equals(usernameField.getText())) {
+                return true; 
+            } 
         }
         
         return false;

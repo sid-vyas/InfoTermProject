@@ -4,12 +4,15 @@
  */
 package view;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.awt.Color;
-import javax.swing.BorderFactory;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.dataModels.Doctor;
-import model.directories.DoctorDirectory;
 
 /**
  *
@@ -20,11 +23,15 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
     /**
      * Creates new form ViewDoctorsPanel
      */
-    DoctorDirectory allDoctors;
-    
-    public ViewDoctorsPanel(DoctorDirectory allDoctors) {
+    private static final String username = "root";
+    private static final String password = "root";
+    private static final String dataConnector = "jdbc:mysql://localhost:3306/connector";
+    Connection sqlConn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+        
+    public ViewDoctorsPanel() {
         initComponents();
-        this.allDoctors = allDoctors;
         
         populateTable();
         usernameField.setEditable(false);
@@ -45,7 +52,6 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
         titleLabel = new javax.swing.JLabel();
         deleteButton = new javax.swing.JButton();
         viewButton = new javax.swing.JButton();
-        ageField = new javax.swing.JTextField();
         mainTitleLabel1 = new javax.swing.JLabel();
         specializationLabel = new javax.swing.JLabel();
         usernameLabel = new javax.swing.JLabel();
@@ -60,9 +66,6 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
         otherGenderButton = new javax.swing.JRadioButton();
         hospitalNameField = new javax.swing.JTextField();
         saveButton = new javax.swing.JButton();
-        communityLabel = new javax.swing.JLabel();
-        communityMenu = new javax.swing.JComboBox<>();
-        ageLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 153, 153));
 
@@ -71,11 +74,11 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Doctor Name", "Hospital Name", "Specialization", "Gender"
+                "Doctor ID", "Username", "Doctor Name", "Hospital Name", "Specialization", "Gender"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -98,12 +101,6 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
         viewButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewButtonActionPerformed(evt);
-            }
-        });
-
-        ageField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ageFieldActionPerformed(evt);
             }
         });
 
@@ -176,17 +173,6 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
             }
         });
 
-        communityLabel.setText("Community:");
-
-        communityMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Uptown", "Downtown", "York" }));
-        communityMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                communityMenuActionPerformed(evt);
-            }
-        });
-
-        ageLabel.setText("Age:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -215,20 +201,11 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
                                 .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(hospitalNameLabel)
-                                    .addGap(18, 18, 18))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(communityLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(hospitalNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(communityMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(hospitalNameLabel)
+                            .addGap(18, 18, 18)
+                            .addComponent(hospitalNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(specializationLabel)
                     .addComponent(genderLabel)
-                    .addComponent(ageLabel)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -263,15 +240,7 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(hospitalNameLabel)
                             .addComponent(hospitalNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(communityLabel)
-                            .addComponent(communityMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ageLabel)
-                            .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(genderLabel)
                             .addComponent(maleButton)
@@ -291,7 +260,7 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(viewButton)
                             .addComponent(deleteButton))))
-                .addContainerGap(433, Short.MAX_VALUE))
+                .addContainerGap(454, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -302,10 +271,20 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select an entry to be deleted", "Error", HEIGHT);
         } else {
             DefaultTableModel model = (DefaultTableModel) doctorListTable.getModel();
-            Doctor doctor = (Doctor) model.getValueAt(selectedIndex, 0);
-            allDoctors.removeDoctor(doctor);
-            JOptionPane.showMessageDialog(this, "The selected entry is successfully deleted", "Deleted", HEIGHT);
-            populateTable();
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                sqlConn = DriverManager.getConnection(dataConnector, username, password);
+                pst = sqlConn.prepareStatement("DELETE FROM doctors WHERE doctor_id = ?;");
+
+                pst.setString(1, model.getValueAt(selectedIndex, 0).toString());
+
+                pst.executeUpdate();
+                populateTable();
+
+                JOptionPane.showMessageDialog(this, "Doctor Deleted Successfully", "Update", HEIGHT);
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -318,28 +297,21 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
         }
              
         DefaultTableModel model = (DefaultTableModel) doctorListTable.getModel();
-        Doctor selectedDoctor = (Doctor) model.getValueAt(selectedIndex, 0);
         
-        usernameField.setText(selectedDoctor.getUserId());
-        nameField.setText(selectedDoctor.getName());
-        hospitalNameField.setText(selectedDoctor.getHospitalName());
-        communityMenu.setSelectedItem(selectedDoctor.getCommunity());
-        ageField.setText(Integer.toString(selectedDoctor.getAge()));
         
-        String gender = selectedDoctor.getGender();
-        if(gender.equals("Male"))
+        usernameField.setText(model.getValueAt(selectedIndex, 1).toString());
+        nameField.setText(model.getValueAt(selectedIndex, 2).toString());
+        hospitalNameField.setText(model.getValueAt(selectedIndex, 3).toString());
+
+        if(model.getValueAt(selectedIndex, 5).toString().equals("Male"))
             maleButton.setEnabled(true);
-        else if(gender.equals("Female"))
+        else if(model.getValueAt(selectedIndex, 5).toString().equals("Female"))
             femaleButton.setEnabled(true);
         else
             otherGenderButton.setEnabled(true);
         
-        specializationField.setText(selectedDoctor.getSpecialization());
+        specializationField.setText(model.getValueAt(selectedIndex, 4).toString());
     }//GEN-LAST:event_viewButtonActionPerformed
-
-    private void ageFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ageFieldActionPerformed
 
     private void specializationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specializationFieldActionPerformed
         // TODO add your handling code here:
@@ -377,38 +349,32 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
         } else {
             try{
                 DefaultTableModel model = (DefaultTableModel) doctorListTable.getModel();
-                Doctor doctor = (Doctor) model.getValueAt(selectedIndex, 0);
-            
-                doctor.setUserId(usernameField.getText());
-                doctor.setName(nameField.getText());
-                doctor.setHospitalName(hospitalNameField.getText());
-                doctor.setCommunity(communityMenu.getSelectedItem().toString());
+                Class.forName("com.mysql.jdbc.Driver");
+                sqlConn = DriverManager.getConnection(dataConnector, username, password);
+                pst = sqlConn.prepareStatement("update doctors set DoctorName = ?, HospitalName = ?, Gender = ?, Specialization = ? where doctor_id = ?");
 
-                if(Integer.parseInt(ageField.getText()) < 22 || Integer.parseInt(ageField.getText()) > 65) {
-                    ageField.setBorder(BorderFactory.createLineBorder(Color.red));
-                    JOptionPane.showMessageDialog(this, "Please enter an age between 22 and 65", "Error", HEIGHT);
-                    return;
-                } else {
-                    doctor.setAge(Integer.parseInt(ageField.getText()));
-                }
-
+                pst.setString(1, nameField.getText());
+                pst.setString(2, hospitalNameField.getText());
+                
                 if(maleButton.isSelected()) {
-                    doctor.setGender("Male");
+                    pst.setString(3, "Male");
                 } else if(femaleButton.isSelected()) {
-                    doctor.setGender("Female");
+                    pst.setString(3, "Female");
                 } else if(otherGenderButton.isSelected()) {
-                    doctor.setGender("Other");
+                    pst.setString(3, "Other");
                 } else {
                     JOptionPane.showMessageDialog(this, "Please select a Gender option", "Error", HEIGHT);
                     return;
                 }
+                pst.setString(4, specializationField.getText());
+                pst.setString(5, model.getValueAt(selectedIndex, 0).toString());
 
-                doctor.setSpecialization(specializationField.getText());
+                pst.executeUpdate();
+                populateTable();
+                emptyTextFields();
 
 
                 JOptionPane.showMessageDialog(this, "The selected entry is successfully updated", "Updated", HEIGHT);
-                populateTable();
-                emptyTextFields();
 
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(this, "Please enter all your details", "Error", HEIGHT);
@@ -416,20 +382,35 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void communityMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_communityMenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_communityMenuActionPerformed
-
     private void populateTable() {
-        DefaultTableModel model = (DefaultTableModel) doctorListTable.getModel();
-        model.setRowCount(0);
-        for(Doctor doc : allDoctors.getAllDoctors()) {
-            Object[] row = new Object[4];
-            row[0] = doc;
-            row[1] = doc.getHospitalName();
-            row[2] = doc.getSpecialization();
-            row[3] = doc.getGender();
-            model.addRow(row);
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection(dataConnector, username, password);
+            pst = sqlConn.prepareStatement("select * from doctors");
+            
+            rs = pst.executeQuery();
+            ResultSetMetaData stData = rs.getMetaData();
+            
+            int columnCount = stData.getColumnCount();
+            
+            DefaultTableModel recordTable = (DefaultTableModel) doctorListTable.getModel();
+            recordTable.setRowCount(0);
+            
+            while(rs.next()) {
+                Vector columnData = new Vector();
+                
+                for(int i = 0; i <= columnCount; i++) {
+                    columnData.add(rs.getString("doctor_id"));
+                    columnData.add(rs.getString("Username"));
+                    columnData.add(rs.getString("DoctorName"));
+                    columnData.add(rs.getString("HospitalName"));
+                    columnData.add(rs.getString("Specialization"));
+                    columnData.add(rs.getString("Gender"));
+                } 
+                recordTable.addRow(columnData);
+            }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
     
@@ -437,8 +418,6 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
         usernameField.setText("");
         nameField.setText("");
         hospitalNameField.setText("");
-        communityMenu.setSelectedItem("");
-        ageField.setText("");
         
         if(maleButton.isEnabled())
             maleButton.setEnabled(false);
@@ -451,10 +430,6 @@ public class ViewDoctorsPanel extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField ageField;
-    private javax.swing.JLabel ageLabel;
-    private javax.swing.JLabel communityLabel;
-    private javax.swing.JComboBox<String> communityMenu;
     private javax.swing.JButton deleteButton;
     private javax.swing.JTable doctorListTable;
     private javax.swing.JRadioButton femaleButton;

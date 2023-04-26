@@ -5,12 +5,6 @@
 package view;
 
 import java.awt.CardLayout;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import model.directories.DoctorDirectory;
-import model.directories.EncounterDirectory;
-import model.directories.HospitalDirectory;
-import model.directories.PatientDirectory;
 
 /**
  *
@@ -18,21 +12,13 @@ import model.directories.PatientDirectory;
  */
 public class AdminLandingPanel extends javax.swing.JPanel {
     String adminType;
-    DoctorDirectory allDoctors;
-    HospitalDirectory allHospitals;
-    PatientDirectory allPatients;
-    EncounterDirectory allEncounters;
 
     /**
      * Creates new form SystemAdminLoginPanel
      */
-    public AdminLandingPanel(String adminType, DoctorDirectory allDoctors, HospitalDirectory allHospitals, PatientDirectory allPatients, EncounterDirectory allEncounters) {
+    public AdminLandingPanel(String adminType) {
         initComponents();
         this.adminType = adminType;
-        this.allDoctors = allDoctors;
-        this.allHospitals = allHospitals;
-        this.allPatients = allPatients;
-        this.allEncounters = allEncounters;
         
         setButtons();
     }
@@ -133,7 +119,7 @@ public class AdminLandingPanel extends javax.swing.JPanel {
 
     private void viewDoctorsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDoctorsButtonActionPerformed
         // TODO add your handling code here
-        ViewDoctorsPanel viewDoctorsPanel = new ViewDoctorsPanel(allDoctors);
+        ViewDoctorsPanel viewDoctorsPanel = new ViewDoctorsPanel();
         rightPanel.add(viewDoctorsPanel);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.next(rightPanel);
@@ -141,7 +127,7 @@ public class AdminLandingPanel extends javax.swing.JPanel {
 
     private void viewHospitalsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewHospitalsButtonActionPerformed
         // TODO add your handling code here:
-        HospitalViewPanel hospitalViewPanel = new HospitalViewPanel(rightPanel, allHospitals);
+        HospitalViewPanel hospitalViewPanel = new HospitalViewPanel();
         rightPanel.add(hospitalViewPanel);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.next(rightPanel);
@@ -149,7 +135,7 @@ public class AdminLandingPanel extends javax.swing.JPanel {
 
     private void createHospitalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createHospitalButtonActionPerformed
         // TODO add your handling code here:
-        CreateHospitalPanel createHospitalPanel = new CreateHospitalPanel(allHospitals);
+        CreateHospitalPanel createHospitalPanel = new CreateHospitalPanel();
         rightPanel.add(createHospitalPanel);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.next(rightPanel);
@@ -157,7 +143,7 @@ public class AdminLandingPanel extends javax.swing.JPanel {
 
     private void createDoctorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDoctorButtonActionPerformed
         // TODO add your handling code here:
-        DoctorSignUpPanel doctorSignUpPanel = new DoctorSignUpPanel(rightPanel, allDoctors, allPatients, allEncounters);
+        DoctorSignUpPanel doctorSignUpPanel = new DoctorSignUpPanel();
         rightPanel.add(doctorSignUpPanel);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.next(rightPanel);

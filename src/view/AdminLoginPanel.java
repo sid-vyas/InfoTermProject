@@ -158,7 +158,7 @@ public class AdminLoginPanel extends javax.swing.JPanel {
         }
         
         if((adminTypeMenu.getSelectedItem().equals("System") && (usernameField.getText().equals("admin1") || usernameField.getText().equals("admin2")))  || (adminTypeMenu.getSelectedItem().equals("Community") && (usernameField.getText().equals("comm1") || usernameField.getText().equals("comm2"))) || (adminTypeMenu.getSelectedItem().equals("Hospital") && (usernameField.getText().equals("hAdmin1") || usernameField.getText().equals("hAdmin2")))) {
-            AdminLandingPanel systemAdminLoginPanel = new AdminLandingPanel(adminType, allDoctors, allHospitals, allPatients, allEncounters);
+            AdminLandingPanel systemAdminLoginPanel = new AdminLandingPanel(adminType);
             bottomPanel.add(systemAdminLoginPanel);
             CardLayout layout = (CardLayout) bottomPanel.getLayout();
             layout.next(bottomPanel);

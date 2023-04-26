@@ -8,8 +8,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
-import model.dataModels.Hospital;
-import model.directories.HospitalDirectory;
 
 /**
  *
@@ -20,8 +18,6 @@ public class CreateHospitalPanel extends javax.swing.JPanel {
     /**
      * Creates new form CreateHospitalPanel
      */
-    HospitalDirectory allHospitals;
-    Hospital newHospital;
     
     private static final String username = "root";
     private static final String password = "root";
@@ -29,10 +25,8 @@ public class CreateHospitalPanel extends javax.swing.JPanel {
     Connection sqlConn = null;
     PreparedStatement pst = null;
     
-    public CreateHospitalPanel(HospitalDirectory allHospitals) {
+    public CreateHospitalPanel() {
         initComponents();
-        this.allHospitals = allHospitals;
-        newHospital = new Hospital();
     }
 
     /**
