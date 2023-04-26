@@ -4,6 +4,13 @@
  */
 package view;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +25,13 @@ import model.directories.DoctorDirectory;
 public class DoctorSearchPanel extends javax.swing.JPanel {
     JPanel bottomPanel;
     DoctorDirectory allDoctors;
+    
+    private static final String username = "root";
+    private static final String password = "root";
+    private static final String dataConnector = "jdbc:mysql://localhost:3306/connector";
+    Connection sqlConn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     /**
      * Creates new form DoctorSearchPanel
      */
@@ -116,21 +130,39 @@ public class DoctorSearchPanel extends javax.swing.JPanel {
     private void searchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyReleased
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) doctorListTable.getModel();
-        TableRowSorter<DefaultTableModel> ts = new TableRowSorter<DefaultTableModel>(model);
+        TableRowSorter<DefaultTableModel> ts = new TableRowSorter<>(model);
         doctorListTable.setRowSorter(ts);
         ts.setRowFilter(RowFilter.regexFilter(searchField.getText().toLowerCase().trim()));
     }//GEN-LAST:event_searchFieldKeyReleased
 
     private void populateTable() {
-        DefaultTableModel model = (DefaultTableModel) doctorListTable.getModel();
-        model.setRowCount(0);
-        for(Doctor doc : allDoctors.getAllDoctors()) {
-            Object[] row = new Object[4];
-            row[0] = doc;
-            row[1] = doc.getHospitalName();
-            row[2] = doc.getSpecialization();
-            row[3] = doc.getGender();
-            model.addRow(row);
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection(dataConnector, username, password);
+            pst = sqlConn.prepareStatement("select * from doctors");
+            
+            rs = pst.executeQuery();
+            ResultSetMetaData stData = rs.getMetaData();
+            
+            int columnCount = stData.getColumnCount();
+            
+            DefaultTableModel recordTable = (DefaultTableModel) doctorListTable.getModel();
+            recordTable.setRowCount(0);
+            
+            while(rs.next()) {
+                Vector columnData = new Vector();
+                
+                for(int i = 0; i <= columnCount; i++) {
+                    columnData.add(rs.getString("doctor_id"));
+                    columnData.add(rs.getString("DoctorName"));
+                    columnData.add(rs.getString("HospitalName"));
+                    columnData.add(rs.getString("Specialization"));
+                    columnData.add(rs.getString("Gender"));
+                } 
+                recordTable.addRow(columnData);
+            }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 
