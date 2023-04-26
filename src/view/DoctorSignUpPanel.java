@@ -7,13 +7,10 @@ package view;
 import java.awt.CardLayout;
 import java.awt.Color;
 import static java.awt.image.ImageObserver.HEIGHT;
-import javax.swing.BorderFactory;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import model.dataModels.Doctor;
-import model.directories.DoctorDirectory;
-import model.directories.EncounterDirectory;
-import model.directories.PatientDirectory;
 
 /**
  *
@@ -24,19 +21,15 @@ public class DoctorSignUpPanel extends javax.swing.JPanel {
     /**
      * Creates new form DoctorSignUpPanel
      */
-    JPanel bottomPanel;
-    Doctor newDoctor;
-    DoctorDirectory allDoctors;
-    PatientDirectory allPatients;
-    EncounterDirectory allEncounters;
+ 
+    private static final String username = "root";
+    private static final String password = "root";
+    private static final String dataConnector = "jdbc:mysql://localhost:3306/connector";
+    Connection sqlConn = null;
+    PreparedStatement pst = null;
     
-    public DoctorSignUpPanel(JPanel bottomPanel, DoctorDirectory allDoctors, PatientDirectory allPatients, EncounterDirectory allEncounters) {
+    public DoctorSignUpPanel() {
         initComponents();
-        this.bottomPanel = bottomPanel;
-        newDoctor = new Doctor();
-        this.allDoctors = allDoctors;
-        this.allPatients = allPatients;
-        this.allEncounters = allEncounters;
     }
 
     /**
@@ -285,39 +278,35 @@ public class DoctorSignUpPanel extends javax.swing.JPanel {
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         // TODO add your handling code here:
         try{
-            newDoctor.setUserId(usernameField.getText());
-            newDoctor.setName(nameField.getText());
-            newDoctor.setHospitalName(hospitalNameField.getText());
-            newDoctor.setCommunity(communityMenu.getSelectedItem().toString());
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/connector", "root", "root");
+            pst = sqlConn.prepareStatement("insert into doctors(Username,DoctorName,HospitalName,Community,Age,Gender,Specialization) values (?,?,?,?,?,?,?)");
             
-            if(Integer.parseInt(ageField.getText()) < 22 || Integer.parseInt(ageField.getText()) > 65) {
-                ageField.setBorder(BorderFactory.createLineBorder(Color.red));
-                JOptionPane.showMessageDialog(this, "Please enter an age between 22 and 65", "Error", HEIGHT);
-                return;
-            } else {
-                newDoctor.setAge(Integer.parseInt(ageField.getText()));
-            }
-            
+            pst.setString(1, usernameField.getText());
+            pst.setString(2, nameField.getText());
+            pst.setString(3, hospitalNameField.getText());
+            pst.setString(4, communityMenu.getSelectedItem().toString());
+            pst.setString(5, ageField.getText());
+             
             if(maleButton.isSelected()) {
-                newDoctor.setGender("Male");
+                 pst.setString(6, "Male");
             } else if(femaleButton.isSelected()) {
-                newDoctor.setGender("Female");
+                pst.setString(6, "Female");
             } else if(otherGenderButton.isSelected()) {
-                newDoctor.setGender("Other");
+                pst.setString(6, "Other");
             } else {
                 JOptionPane.showMessageDialog(this, "Please select a Gender option", "Error", HEIGHT);
                 return;
             }
-            
-            newDoctor.setSpecialization(specializationField.getText());
-            
-            allDoctors.addDoctor(newDoctor);
+             
+            pst.setString(7, specializationField.getText());
+            pst.executeUpdate();
             
             resetForm();
             
             JOptionPane.showMessageDialog(this, "Doctor is Saved Successfully", "Success", HEIGHT);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, "Please enter all your details", "Error", HEIGHT);
+           JOptionPane.showMessageDialog(this, "Please enter all your details", "Error", HEIGHT);
         }
     }//GEN-LAST:event_signUpButtonActionPerformed
 

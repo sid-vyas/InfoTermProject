@@ -14,7 +14,6 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-import model.dataModels.Hospital;
 import model.directories.HospitalDirectory;
 
 /**
@@ -33,14 +32,9 @@ public class HospitalViewPanel extends javax.swing.JPanel {
     Connection sqlConn = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-
-    JPanel rightPanel;
-    HospitalDirectory allHospitals;
     
-    public HospitalViewPanel(JPanel rightPanel, HospitalDirectory allHospitals) {
+    public HospitalViewPanel() {
         initComponents();
-        this.rightPanel= rightPanel;
-        this.allHospitals = allHospitals;
         
         nameField.setEditable(false);
         communityMenu4.setEnabled(false);
