@@ -5,30 +5,18 @@
 package view;
 
 import java.awt.CardLayout;
-import javax.swing.JPanel;
-import model.directories.DoctorDirectory;
-import model.directories.EncounterDirectory;
-import model.directories.PatientDirectory;
 
 /**
  *
  * @author ASUS
  */
 public class DoctorLandingPage extends javax.swing.JPanel {
-    
-    JPanel bottomPanel;
-    DoctorDirectory allDoctors;
-    EncounterDirectory allEncounters;
-    PatientDirectory allPatients;
 
     /**
      * Creates new form CreateEncounterPanel
      */
-    public DoctorLandingPage(JPanel bottomPanel, DoctorDirectory allDoctors, EncounterDirectory allEncounters, PatientDirectory allPatients) {
+    public DoctorLandingPage() {
         initComponents();
-        this.allDoctors = allDoctors;
-        this.allEncounters = allEncounters;
-        this.allPatients = allPatients;
     }
 
     /**
@@ -102,7 +90,7 @@ public class DoctorLandingPage extends javax.swing.JPanel {
 
     private void createPatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPatientButtonActionPerformed
         // TODO add your handling code here:
-        CreatePatientPanel createPatientPanel = new CreatePatientPanel(rightPanel, allPatients);
+        CreatePatientPanel createPatientPanel = new CreatePatientPanel();
         rightPanel.add(createPatientPanel);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.next(rightPanel);
@@ -110,7 +98,7 @@ public class DoctorLandingPage extends javax.swing.JPanel {
 
     private void createEncounterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createEncounterButtonActionPerformed
         // TODO add your handling code here:
-        CreateEncounterPanel createEncounterPanel = new CreateEncounterPanel(rightPanel, allEncounters ,allPatients);
+        CreateEncounterPanel createEncounterPanel = new CreateEncounterPanel();
         rightPanel.add(createEncounterPanel);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.next(rightPanel);

@@ -26,9 +26,6 @@ import model.directories.PatientDirectory;
  */
 public class DoctorLoginPanel extends javax.swing.JPanel {
     JPanel bottomPanel;
-    DoctorDirectory allDoctors;
-    EncounterDirectory allEncounters;
-    PatientDirectory allPatients;
     
     private static final String username = "root";
     private static final String password = "root";
@@ -39,12 +36,9 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
     /**
      * Creates new form DoctorLoginPanel
      */
-    public DoctorLoginPanel(JPanel bottomPanel, DoctorDirectory allDoctors, EncounterDirectory allEncounters, PatientDirectory allPatients) {
+    public DoctorLoginPanel(JPanel bottomPanel) {
         initComponents();
         this.bottomPanel = bottomPanel;
-        this.allDoctors = allDoctors;
-        this.allEncounters = allEncounters;
-        this.allPatients = allPatients;
     }
 
     /**
@@ -150,7 +144,7 @@ public class DoctorLoginPanel extends javax.swing.JPanel {
         try {
             // TODO add your handling code here:
             if(isUsernameValid()) {
-                DoctorLandingPage createEncounterPanel = new DoctorLandingPage(bottomPanel, allDoctors, allEncounters, allPatients);
+                DoctorLandingPage createEncounterPanel = new DoctorLandingPage();
                 bottomPanel.add(createEncounterPanel);
                 CardLayout layout = (CardLayout) bottomPanel.getLayout();
                 layout.next(bottomPanel);

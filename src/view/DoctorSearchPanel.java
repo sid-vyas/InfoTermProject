@@ -66,11 +66,11 @@ public class DoctorSearchPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Doctor Name", "Hospital Name", "Specialization", "Gender"
+                "Doctor ID", "Doctor Name", "Hospital Name", "Specialization", "Gender"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
