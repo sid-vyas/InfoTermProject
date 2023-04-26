@@ -141,6 +141,7 @@ public class CreateHospitalPanel extends javax.swing.JPanel {
             pst.setString(3, employeesField.getText());
             
             pst.executeUpdate();
+            resetForm();
             
             JOptionPane.showMessageDialog(this, "Hospital Added Successfully", "Update", HEIGHT);
         } catch(Exception e) {

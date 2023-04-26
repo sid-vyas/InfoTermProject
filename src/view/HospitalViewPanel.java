@@ -46,8 +46,7 @@ public class HospitalViewPanel extends javax.swing.JPanel {
         communityMenu4.setEnabled(false);
         employeesField.setEditable(false);
         
-        updateDB();
-//        populateTable();
+        populateTable();
     }
 
     /**
@@ -80,11 +79,11 @@ public class HospitalViewPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Hospital Name", "Community", "Number of Employees"
+                "HospitalID", "Hospital Name", "Community", "Number of Employees"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -142,7 +141,6 @@ public class HospitalViewPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(updateTitleLabel)
                     .addComponent(titleLable)
-                    .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,8 +159,9 @@ public class HospitalViewPanel extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(employeesField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(communityMenu4, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(621, Short.MAX_VALUE))
+                                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(513, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,10 +201,20 @@ public class HospitalViewPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select an entry to be deleted", "Error", HEIGHT);
         } else {
             DefaultTableModel model = (DefaultTableModel) hospitalListTable.getModel();
-            Hospital hospital = (Hospital) model.getValueAt(selectedIndex, 0);
-            allHospitals.removeHospital(hospital);
-            JOptionPane.showMessageDialog(this, "The selected entry is successfully deleted", "Deleted", HEIGHT);
-            populateTable();
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                sqlConn = DriverManager.getConnection(dataConnector, username, password);
+                pst = sqlConn.prepareStatement("DELETE FROM hospitals WHERE hospital_id = ?;");
+
+                pst.setString(1, model.getValueAt(selectedIndex, 0).toString());
+
+                pst.executeUpdate();
+                populateTable();
+
+                JOptionPane.showMessageDialog(this, "Hospital Deleted Successfully", "Update", HEIGHT);
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -226,11 +235,9 @@ public class HospitalViewPanel extends javax.swing.JPanel {
         employeesField.setEditable(true);
         
         DefaultTableModel model = (DefaultTableModel) hospitalListTable.getModel();
-        Hospital selectedHospital = (Hospital) model.getValueAt(selectedIndex, 0);
-        
-        nameField.setText(selectedHospital.getName());
-        communityMenu4.setSelectedItem(selectedHospital.getCommunity());
-        employeesField.setText(Integer.toString(selectedHospital.getNumberOfEmployees()));
+        nameField.setText(model.getValueAt(selectedIndex, 1).toString());
+        communityMenu4.setSelectedItem(model.getValueAt(selectedIndex, 2).toString());
+        employeesField.setText(model.getValueAt(selectedIndex, 3).toString());
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -239,35 +246,27 @@ public class HospitalViewPanel extends javax.swing.JPanel {
         if(selectedIndex < 0) {
             JOptionPane.showMessageDialog(this, "Please select an entry to be updated", "Error", HEIGHT);
         } else {
-            DefaultTableModel model = (DefaultTableModel) hospitalListTable.getModel();
-            Hospital hospital = (Hospital) model.getValueAt(selectedIndex, 0);
-            
-            updateUserDetails(hospital);
-            
-            JOptionPane.showMessageDialog(this, "The selected entry is successfully updated", "Updated", HEIGHT);
-            populateTable();
-            emptyTextFields();
-            
+            try {
+                DefaultTableModel model = (DefaultTableModel) hospitalListTable.getModel();
+                Class.forName("com.mysql.jdbc.Driver");
+                sqlConn = DriverManager.getConnection(dataConnector, username, password);
+                pst = sqlConn.prepareStatement("update hospitals set HospitalName = ?, Community = ?, NumberOfEmployees = ? where hospital_id = ?");
+
+                pst.setString(1, nameField.getText());
+                pst.setString(2, communityMenu4.getSelectedItem().toString());
+                pst.setString(3, employeesField.getText());
+                pst.setString(4, model.getValueAt(selectedIndex, 0).toString());
+
+                pst.executeUpdate();
+                populateTable();
+                emptyTextFields();
+
+                JOptionPane.showMessageDialog(this, "Hospital Updated Successfully", "Update", HEIGHT);
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
     }//GEN-LAST:event_saveButtonActionPerformed
-
-    private void populateTable() {
-//        DefaultTableModel model = (DefaultTableModel) hospitalListTable.getModel();
-//        model.setRowCount(0);
-//        for(Hospital hospital : allHospitals.getAllHospitals()) {
-//            Object[] row = new Object[3];
-//            row[0] = hospital;
-//            row[1] = hospital.getCommunity();
-//            row[2] = hospital.getNumberOfEmployees();
-//            model.addRow(row);
-//        }
-    }
-    
-    private void updateUserDetails(Hospital hospital) {
-        hospital.setName(nameField.getText());
-        hospital.setCommunity(communityMenu4.getSelectedItem().toString());
-        hospital.setNumberOfEmployees(Integer.parseInt(employeesField.getText()));
-    }
     
     private void emptyTextFields() {
         nameField.setText("");
@@ -279,7 +278,7 @@ public class HospitalViewPanel extends javax.swing.JPanel {
         employeesField.setEditable(false);
     }
     
-    public void updateDB() {
+    public void populateTable() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             sqlConn = DriverManager.getConnection(dataConnector, username, password);
@@ -297,6 +296,7 @@ public class HospitalViewPanel extends javax.swing.JPanel {
                 Vector columnData = new Vector();
                 
                 for(int i = 0; i <= columnCount; i++) {
+                    columnData.add(rs.getString("hospital_id"));
                     columnData.add(rs.getString("HospitalName"));
                     columnData.add(rs.getString("Community"));
                     columnData.add(rs.getString("NumberOfEmployees"));
