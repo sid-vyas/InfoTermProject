@@ -133,7 +133,7 @@ public class MainSystemJFrame extends javax.swing.JFrame {
 
     private void doctorLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorLoginButtonActionPerformed
         // TODO add your handling code here:
-        DoctorLoginPanel doctorLoginPanel = new DoctorLoginPanel(bottomPanel, allDoctors, allEncounters, allPatients);
+        DoctorLoginPanel doctorLoginPanel = new DoctorLoginPanel(bottomPanel);
         bottomPanel.add(doctorLoginPanel);
         CardLayout layout = (CardLayout) bottomPanel.getLayout();
         layout.next(bottomPanel);
@@ -149,7 +149,7 @@ public class MainSystemJFrame extends javax.swing.JFrame {
 
     private void patientLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientLoginButtonActionPerformed
         // TODO add your handling code here:
-        PatientLoginPanel patientLoginPanel = new PatientLoginPanel(bottomPanel, allDoctors, allPatients);
+        PatientLoginPanel patientLoginPanel = new PatientLoginPanel(bottomPanel, allDoctors);
         bottomPanel.add(patientLoginPanel);
         CardLayout layout = (CardLayout) bottomPanel.getLayout();
         layout.next(bottomPanel);

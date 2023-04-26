@@ -5,13 +5,14 @@
 package view;
 
 import static java.awt.image.ImageObserver.HEIGHT;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Vector;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-import model.dataModels.Encounter;
-import model.dataModels.Patient;
-import model.directories.EncounterDirectory;
-import model.directories.PatientDirectory;
 
 /**
  *
@@ -22,20 +23,18 @@ public class CreateEncounterPanel extends javax.swing.JPanel {
     /**
      * Creates new form CreateEncounterPanel
      */
-    JPanel rightPanel; 
-    EncounterDirectory allEncounters; 
-    PatientDirectory allPatients;
-    Boolean isEditable = false;
-    Encounter newEncounter;
+
     String patientName;
     
-    public CreateEncounterPanel(JPanel rightPanel, EncounterDirectory allEncounters, PatientDirectory allPatients) {
+    private static final String username = "root";
+    private static final String password = "root";
+    private static final String dataConnector = "jdbc:mysql://localhost:3306/connector";
+    Connection sqlConn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
+    public CreateEncounterPanel() {
         initComponents();
-        this.rightPanel = rightPanel;
-        this.allEncounters = allEncounters;
-        this.allPatients = allPatients;
-        newEncounter = new Encounter();
-        
         populateTable();
         
         heartbeatField.setEditable(false);
@@ -81,11 +80,11 @@ public class CreateEncounterPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Patient Name", "Patient Age", "Community", "Gender"
+                "Patient ID", "Patient Name", "Patient Age", "Community", "Gender"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -211,13 +210,17 @@ public class CreateEncounterPanel extends javax.swing.JPanel {
 
     private void recordEncounterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordEncounterButtonActionPerformed
         // TODO add your handling code here:
-        isEditable = true;
-        
         int selectedIndex = patientListTable.getSelectedRow();
         if (selectedIndex <0){
             JOptionPane.showMessageDialog(this, "Please select an entry to view", "Error", HEIGHT);
             return;
         }
+        
+        DefaultTableModel model = (DefaultTableModel) patientListTable.getModel();
+        
+        
+        patientName = model.getValueAt(selectedIndex, 1).toString();
+        
         heartbeatField.setEditable(true);
         temperatureField.setEditable(true);
         bloodPressureField.setEditable(true);
@@ -240,32 +243,57 @@ public class CreateEncounterPanel extends javax.swing.JPanel {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
         try {
-            newEncounter.setBeatsPerMinute(Integer.parseInt(heartbeatField.getText()));
-            newEncounter.setBloodPressure(bloodPressureField.getText());
-            newEncounter.setTemperature(Integer.parseInt(temperatureField.getText()));
-            newEncounter.setOverallDiagnosis(diagnosisField.getText()); 
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/connector", "root", "root");
+            pst = sqlConn.prepareStatement("insert into encounters(PatientName,Heartbeat,Temperature,BloodPressure,Diagnosis) values (?,?,?,?,?)");
             
-            allEncounters.addEncounter(newEncounter);
+            pst.setString(1, patientName);
+            pst.setString(2, heartbeatField.getText());
+            pst.setString(3, temperatureField.getText());
+            pst.setString(4, bloodPressureField.getText());
+            pst.setString(5, diagnosisField.getText());
+            
+            pst.executeUpdate();
             
             JOptionPane.showMessageDialog(this, "Encounter recorded successfully", "Success", HEIGHT);
             
             resetForm();
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, "Please enter all readings", "Error", HEIGHT);
+                        JOptionPane.showMessageDialog(this, e, "Error", HEIGHT);
+
+//            JOptionPane.showMessageDialog(this, "Please enter all readings", "Error", HEIGHT);
         }
         
     }//GEN-LAST:event_saveButtonActionPerformed
     
     void populateTable() {
-        DefaultTableModel model = (DefaultTableModel) patientListTable.getModel();
-        model.setRowCount(0);
-        for(Patient patient : allPatients.getAllPatients()) {
-            Object[] row = new Object[4];
-            row[0] = patient;
-            row[1] = patient.getAge();
-            row[2] = patient.getCommunity();
-            row[3] = patient.getGender();
-            model.addRow(row);
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection(dataConnector, username, password);
+            pst = sqlConn.prepareStatement("select * from patients");
+            
+            rs = pst.executeQuery();
+            ResultSetMetaData stData = rs.getMetaData();
+            
+            int columnCount = stData.getColumnCount();
+            
+            DefaultTableModel recordTable = (DefaultTableModel) patientListTable.getModel();
+            recordTable.setRowCount(0);
+            
+            while(rs.next()) {
+                Vector columnData = new Vector();
+                
+                for(int i = 0; i <= columnCount; i++) {
+                    columnData.add(rs.getString("patient_id"));
+                    columnData.add(rs.getString("Name"));
+                    columnData.add(rs.getString("Age"));
+                    columnData.add(rs.getString("Community"));
+                    columnData.add(rs.getString("Gender"));
+                } 
+                recordTable.addRow(columnData);
+            }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
     

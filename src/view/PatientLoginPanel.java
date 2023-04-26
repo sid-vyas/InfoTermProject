@@ -5,12 +5,18 @@
 package view;
 
 import java.awt.CardLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.JPanel;
-import model.dataModels.Patient;
 import model.directories.DoctorDirectory;
-import model.directories.PatientDirectory;
 
 /**
  *
@@ -19,15 +25,20 @@ import model.directories.PatientDirectory;
 public class PatientLoginPanel extends javax.swing.JPanel {
     JPanel bottomPanel;
     DoctorDirectory allDoctors;
-    PatientDirectory allPatients;
+    
+    private static final String username = "root";
+    private static final String password = "root";
+    private static final String dataConnector = "jdbc:mysql://localhost:3306/connector";
+    Connection sqlConn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     /**
      * Creates new form patientLoginScreen
      */
-    public PatientLoginPanel(JPanel bottomPanel, DoctorDirectory allDoctors, PatientDirectory allPatients) {
+    public PatientLoginPanel(JPanel bottomPanel, DoctorDirectory allDoctors) {
         initComponents();
         this.bottomPanel = bottomPanel;
         this.allDoctors = allDoctors;
-        this.allPatients = allPatients;
     }
 
     /**
@@ -112,14 +123,20 @@ public class PatientLoginPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_usernameFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-        if(isUsernameValid()) {
-            DoctorSearchPanel doctorSearchPanel = new DoctorSearchPanel(bottomPanel, allDoctors);
-            bottomPanel.add(doctorSearchPanel);
-            CardLayout layout = (CardLayout) bottomPanel.getLayout();
-            layout.next(bottomPanel);
-        } else {
-            JOptionPane.showMessageDialog(bottomPanel, "The entered username is incorrect", "Invalid Credentials", ERROR_MESSAGE);
+        try {
+            // TODO add your handling code here:
+            if(isUsernameValid()) {
+                DoctorSearchPanel doctorSearchPanel = new DoctorSearchPanel(bottomPanel, allDoctors);
+                bottomPanel.add(doctorSearchPanel);
+                CardLayout layout = (CardLayout) bottomPanel.getLayout();
+                layout.next(bottomPanel);
+            } else {
+                JOptionPane.showMessageDialog(bottomPanel, "The entered username is incorrect", "Invalid Credentials", ERROR_MESSAGE);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PatientLoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PatientLoginPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
@@ -128,15 +145,26 @@ public class PatientLoginPanel extends javax.swing.JPanel {
         bottomPanel.remove(this);
     }//GEN-LAST:event_backButtonActionPerformed
 
-    Boolean isUsernameValid() {
+    Boolean isUsernameValid() throws ClassNotFoundException, SQLException {
         if(usernameField.getText().equals("patient") || usernameField.getText().equals("patient1")) {
             return true;
         }
         
-        for(Patient patient : allPatients.getAllPatients()) {
-            if(patient.getUsername().equals(usernameField.getText())) {
-                return true;
-            }
+        Class.forName("com.mysql.jdbc.Driver");
+        sqlConn = DriverManager.getConnection(dataConnector, username, password);
+        pst = sqlConn.prepareStatement("select * from patients");
+
+        rs = pst.executeQuery();
+        ArrayList<String> columnData = new ArrayList<String>();
+
+        while(rs.next()) {
+            columnData.add(rs.getString("Username"));
+        }
+        
+        for(String patient : columnData) {
+            if(patient.equals(usernameField.getText())) {
+                return true; 
+            } 
         }
         
         return false;

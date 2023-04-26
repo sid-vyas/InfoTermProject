@@ -5,14 +5,13 @@
 package view;
 
 import static java.awt.image.ImageObserver.HEIGHT;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import model.dataModels.Patient;
-import model.directories.PatientDirectory;
-
 /**
  *
  * @author ASUS
@@ -22,15 +21,15 @@ public class CreatePatientPanel extends javax.swing.JPanel {
     /**
      * Creates new form CreatePatientPanel
      */
-    JPanel rightPanel;
-    Patient newPatient;
-    PatientDirectory allPatients;
     
-    public CreatePatientPanel(JPanel rightPanel, PatientDirectory allPatients) {
+    private static final String username = "root";
+    private static final String password = "root";
+    private static final String dataConnector = "jdbc:mysql://localhost:3306/connector";
+    Connection sqlConn = null;
+    PreparedStatement pst = null;
+    
+    public CreatePatientPanel() {
         initComponents();
-        newPatient = new Patient();
-        this.rightPanel = rightPanel;
-        this.allPatients = allPatients;
     }
 
     /**
@@ -295,31 +294,38 @@ public class CreatePatientPanel extends javax.swing.JPanel {
         Date dateOfBirth = new Date();
         
         try{
-            newPatient.setUsername(usernameField.getText());
-            newPatient.setName(nameField.getText());
-            newPatient.setHouse(houseField.getText());
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/connector", "root", "root");
+            pst = sqlConn.prepareStatement("insert into patients(Username,Name,House,Age,Gender,DateOfBirth,PhoneNumber,Community) values (?,?,?,?,?,?,?,?)");
+            
+
+            
+            pst.setString(1, usernameField.getText());
+            pst.setString(2, nameField.getText());
+            pst.setString(3, houseField.getText());
+
             
             if(Integer.parseInt(ageField.getText()) < 18 || Integer.parseInt(ageField.getText()) > 65) {
                 JOptionPane.showMessageDialog(this, "Please enter an age between 22 and 65", "Error", HEIGHT);
                 return;
             } else {
-                newPatient.setAge(Integer.parseInt(ageField.getText()));
+                pst.setString(4, ageField.getText());
             }
             
             if(maleButton.isSelected()) {
-                newPatient.setGender("Male");
+                 pst.setString(5, "Male");
             } else if(femaleButton.isSelected()) {
-                newPatient.setGender("Female");
+                pst.setString(5, "Female");
             } else if(otherGenderButton.isSelected()) {
-                newPatient.setGender("Other");
+                pst.setString(5, "Other");
             } else {
                 JOptionPane.showMessageDialog(this, "Please select a Gender option", "Error", HEIGHT);
                 return;
             }
             
             try {
-            dateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse(dateField.getText());
-            newPatient.setDateOfBirth(dateOfBirth);
+                dateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse(dateField.getText());
+                pst.setString(6, dateField.getText());
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(this, "Please enter the date in the dd/MM/yyyy format", "Error", HEIGHT);
                 return;
@@ -329,12 +335,12 @@ public class CreatePatientPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Phone number should be 10 digits long", "Error", HEIGHT);
                 return;
             } else {
-                newPatient.setPhoneNumber(Long.parseLong(phoneNumberField.getText()));
+                pst.setString(7, phoneNumberField.getText());
             }
             
-            newPatient.setCommunity(communityMenu.getSelectedItem().toString());
+            pst.setString(8, communityMenu.getSelectedItem().toString());
             
-            allPatients.addPatient(newPatient);
+            pst.executeUpdate();
             
             resetForm();
             JOptionPane.showMessageDialog(this, "Patient is Saved Successfully", "Success", HEIGHT);            
