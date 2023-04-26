@@ -4,7 +4,13 @@
  */
 package view;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import static java.awt.image.ImageObserver.HEIGHT;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +26,14 @@ public class HospitalViewPanel extends javax.swing.JPanel {
     /**
      * Creates new form HospitalViewPanel
      */
+    private static final String username = "root";
+    private static final String password = "root";
+    private static final String dataConnector = "jdbc:mysql://localhost:3306/connector";
+    
+    Connection sqlConn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
     JPanel rightPanel;
     HospitalDirectory allHospitals;
     
@@ -32,7 +46,8 @@ public class HospitalViewPanel extends javax.swing.JPanel {
         communityMenu4.setEnabled(false);
         employeesField.setEditable(false);
         
-        populateTable();
+        updateDB();
+//        populateTable();
     }
 
     /**
@@ -237,15 +252,15 @@ public class HospitalViewPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void populateTable() {
-        DefaultTableModel model = (DefaultTableModel) hospitalListTable.getModel();
-        model.setRowCount(0);
-        for(Hospital hospital : allHospitals.getAllHospitals()) {
-            Object[] row = new Object[3];
-            row[0] = hospital;
-            row[1] = hospital.getCommunity();
-            row[2] = hospital.getNumberOfEmployees();
-            model.addRow(row);
-        }
+//        DefaultTableModel model = (DefaultTableModel) hospitalListTable.getModel();
+//        model.setRowCount(0);
+//        for(Hospital hospital : allHospitals.getAllHospitals()) {
+//            Object[] row = new Object[3];
+//            row[0] = hospital;
+//            row[1] = hospital.getCommunity();
+//            row[2] = hospital.getNumberOfEmployees();
+//            model.addRow(row);
+//        }
     }
     
     private void updateUserDetails(Hospital hospital) {
@@ -262,6 +277,35 @@ public class HospitalViewPanel extends javax.swing.JPanel {
         nameField.setEditable(false);
         communityMenu4.setEnabled(false);
         employeesField.setEditable(false);
+    }
+    
+    public void updateDB() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection(dataConnector, username, password);
+            pst = sqlConn.prepareStatement("select * from hospitals");
+            
+            rs = pst.executeQuery();
+            ResultSetMetaData stData = rs.getMetaData();
+            
+            int columnCount = stData.getColumnCount();
+            
+            DefaultTableModel recordTable = (DefaultTableModel) hospitalListTable.getModel();
+            recordTable.setRowCount(0);
+            
+            while(rs.next()) {
+                Vector columnData = new Vector();
+                
+                for(int i = 0; i <= columnCount; i++) {
+                    columnData.add(rs.getString("HospitalName"));
+                    columnData.add(rs.getString("Community"));
+                    columnData.add(rs.getString("NumberOfEmployees"));
+                } 
+                recordTable.addRow(columnData);
+            }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

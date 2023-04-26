@@ -4,6 +4,9 @@
  */
 package view;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import model.dataModels.Hospital;
 import model.directories.HospitalDirectory;
@@ -19,6 +22,12 @@ public class CreateHospitalPanel extends javax.swing.JPanel {
      */
     HospitalDirectory allHospitals;
     Hospital newHospital;
+    
+    private static final String username = "root";
+    private static final String password = "root";
+    private static final String dataConnector = "jdbc:mysql://localhost:3306/connector";
+    Connection sqlConn = null;
+    PreparedStatement pst = null;
     
     public CreateHospitalPanel(HospitalDirectory allHospitals) {
         initComponents();
@@ -123,16 +132,19 @@ public class CreateHospitalPanel extends javax.swing.JPanel {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
         try {
-            newHospital.setName(nameField.getText());
-            newHospital.setCommunity(communityMenu.getSelectedItem().toString());
-            newHospital.setNumberOfEmployees(Integer.parseInt(employeesField.getText()));
+            Class.forName("com.mysql.jdbc.Driver");
+            sqlConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/connector", "root", "root");
+            pst = sqlConn.prepareStatement("insert into hospitals(HospitalName,Community,NumberOfEmployees) values (?, ?, ?)");
             
-            resetForm();
-                        
-            allHospitals.addHospital(newHospital);
+            pst.setString(1, nameField.getText());
+            pst.setString(2, communityMenu.getSelectedItem().toString());
+            pst.setString(3, employeesField.getText());
+            
+            pst.executeUpdate();
+            
             JOptionPane.showMessageDialog(this, "Hospital Added Successfully", "Update", HEIGHT);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, "Please enter all details", "Error", HEIGHT);
+            JOptionPane.showMessageDialog(this, e, "Error", HEIGHT);
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
